@@ -1,8 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import { FormArray, FormBuilder, FormControl, FormGroup } from '@angular/forms';
 import { UserService } from './user.service';
-import { OwnerEntity } from './owner';
-import { Observable } from 'rxjs';
+import { CarEntity, OwnerEntity } from './owner';
 
 @Component({
   selector: 'app-root',
@@ -10,31 +8,25 @@ import { Observable } from 'rxjs';
   styleUrls: ['./app.component.css']
 })
 export class AppComponent implements OnInit {
-  titlePerson = 'Form Controls';
+  titleList = 'Владельцы aвтомобилей';
   users: OwnerEntity[] = [];
-  userCarsControl!: FormGroup;
+  user?: OwnerEntity;
+  cars?: CarEntity[];
+  aId: number;
 
   constructor(
-    private formBuilder: FormBuilder,
     private _userService: UserService,
   ) { }
 
   ngOnInit(): void {
     this._userService.getgetOwners()
-    .subscribe(data => this.users = data);
-    this.userCarsControl = this.formBuilder.group({
-      user: new FormGroup({
-        firstName: new FormControl(),
-        lastName: new FormControl(),
-        middleName: new FormControl(),
-      }),
-      cars: new FormArray([
-        new FormControl(),
-        new FormControl(),
-        new FormControl(),
-        new FormControl(),
-      ])
-    })
-    this.userCarsControl.valueChanges.subscribe((value) => console.log(value));
+    .subscribe(data => {
+      this.users = data;
+    });
+  }
+
+  getIndex(user: OwnerEntity) {
+    this.user = user;
+    this.cars = user.cars
   }
 }

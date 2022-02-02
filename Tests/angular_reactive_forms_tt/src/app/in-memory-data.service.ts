@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
 import { InMemoryDbService } from 'angular-in-memory-web-api';
+import { OwnerEntity } from './owner';
 
 @Injectable({
   providedIn: 'root'
@@ -9,7 +10,7 @@ export class InMemoryDataService implements InMemoryDbService {
   createDb() {
     let users = [
       {
-        id: 1,
+        id: 11,
         firstName: 'Jhon',
         lastName: 'Smith',
         middleName: 'Aleksandrovith',
@@ -21,5 +22,9 @@ export class InMemoryDataService implements InMemoryDbService {
     ]
   
     return {users};
+  }
+
+  generateId(users: OwnerEntity[]): number {
+    return users.length > 0 ? Math.max(...users.map(user => user.id)) + 1 : 11;
   }
 }

@@ -1,0 +1,40 @@
+<form class="row g-3" [formGroup]="userCarsControl">
+  <div class="col-auto">
+    <label for="ln" class="col-sm-2 col-form-label"></label>
+    <input
+      type="text"
+      name="lastName"
+      id="ln"
+      formControlName="lastName"
+    >
+  </div>
+  <div class="col-auto">
+    <label for="fn" class="col-sm-2 col-form-label"></label>
+    <input
+      type="text"
+      name="lastName"
+      id="fn"
+      formControlName="firstName"
+    >
+  </div>
+  <div class="col-auto">
+    <label for="mn" class="col-sm-2 col-form-label"></label>
+    <input
+      type="text"
+      name="lastName"
+      id="mn"
+      formControlName="middleName"
+    >
+  </div>
+  <div formArrayName="carsControl" *ngFor="let car of carsControl['controls']; let i = index;" >
+    <!-- <fieldset formGroupName="i"> -->
+      <span>{{ i + 1 }}</span>
+      <input type="text" name="plate" formControlName="plate">
+      <input type="text" name="brand" formControlName="brand">
+      <input type="text" name="model" formControlName="model">
+      <input type="text" name="year" formControlName="year">
+      <button>Delete</button>
+    <!-- </fieldset> -->
+
+  </div>
+</form>

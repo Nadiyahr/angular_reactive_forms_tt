@@ -8,10 +8,14 @@ import { HttpClientInMemoryWebApiModule } from 'angular-in-memory-web-api';
 import { InMemoryDataService } from './in-memory-data.service';
 import { HttpClientModule } from '@angular/common/http';
 import { UserService } from './user.service';
+import { AddUserComponent } from './add-user/add-user.component';
+import { UsersListComponent } from './users-list/users-list.component';
 
 @NgModule({
   declarations: [
     AppComponent,
+    AddUserComponent,
+    UsersListComponent,
   ],
   imports: [
     BrowserModule,
