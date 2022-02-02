@@ -26,14 +26,23 @@
       formControlName="middleName"
     >
   </div>
-  <div formArrayName="carsControl" *ngFor="let car of carsControl['controls']; let i = index;" >
+  <div formArrayName="carsControl">
+    <div  *ngFor="let car of carsControl['controls']; let i = index;" [formGroupName]="i">
+      <fieldset>
+        <input type="text" name="plate" formControlName="plate">
+        <input type="text" name="brand" formControlName="brand">
+        <input type="text" name="model" formControlName="model">
+        <input type="text" name="year" formControlName="year">
+        <button>Delete</button>
+      </fieldset>
+    </div>
     <!-- <fieldset formGroupName="i"> -->
-      <span>{{ i + 1 }}</span>
+      <!-- <span>{{ i + 1 }}</span>
       <input type="text" name="plate" formControlName="plate">
       <input type="text" name="brand" formControlName="brand">
       <input type="text" name="model" formControlName="model">
       <input type="text" name="year" formControlName="year">
-      <button>Delete</button>
+      <button>Delete</button> -->
     <!-- </fieldset> -->
 
   </div>
