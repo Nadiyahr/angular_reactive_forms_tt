@@ -1,6 +1,6 @@
 export type CarEntity = {
   userId: number;
-  plate: string;
+  number: string;
   brand: string;
   model: string;
   year: number;

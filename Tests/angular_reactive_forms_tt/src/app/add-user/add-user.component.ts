@@ -1,6 +1,6 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { FormArray, FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
-// import { UserService } from '../user.service';
+import { UserService } from '../user.service';
 import { CarEntity, OwnerEntity } from '../owner';
 
 @Component({
@@ -11,19 +11,20 @@ import { CarEntity, OwnerEntity } from '../owner';
 
 export class AddUserComponent implements OnInit {
   userCarsControl: FormGroup;
-  // carsControl: FormArray;
-  // cardGroup: FormGroup;
+  newValue: any;
   @Input() user?: OwnerEntity;
-  @Input() cars?: CarEntity[]
+  @Input() cars?: CarEntity[];
+  @Input() isSelected: boolean;
+  @Output() toggle = new EventEmitter();
+
   constructor(
     private formBuilder: FormBuilder,
+    private _userService: UserService,
   ) { 
   }
   
 
   ngOnInit(): void {
-    // console.log(this.cars)
-
     this.userCarsControl = this.formBuilder.group({
       lastName: new FormControl(this.user?.lastName),
       firstName: new FormControl(this.user?.firstName),
@@ -32,11 +33,12 @@ export class AddUserComponent implements OnInit {
     })
 
     this.userCarsControl.setControl('carsControl', this.setExistingCars(this.cars ? this.cars : []))
-
-    // console.log(this.setCars());
     
 
-    // this.userCarsControl.valueChanges.subscribe((value) => console.log(value));
+    this.userCarsControl.valueChanges.subscribe((value) => {
+      console.log(value);
+      this.newValue = value;
+    });
   }
   
 
@@ -49,7 +51,7 @@ export class AddUserComponent implements OnInit {
     cars.forEach(car => {
       formArray.push(
         this.formBuilder.group({
-          plate: new FormControl(car.plate),
+          number: new FormControl(car.number),
           brand: new FormControl(car.brand),
           model: new FormControl(car.model),
           year: new FormControl(car.year),
@@ -60,52 +62,28 @@ export class AddUserComponent implements OnInit {
     return formArray;
   }
 
-  // this.userCarsControl = this.formBuilder.group({
-  //   lastName: new FormControl(),
-  //   firstName: new FormControl(),
-  //   middleName: new FormControl(),
-  //   carsControl: this.formBuilder.array([
-  //     plate: new FormControl(),
-  //     brand: new FormControl(),
-  //     model: new FormControl(item?.model),
-  //     year: new FormControl(item?.year),
-  //   ])
-  // })
+  newCar(): FormGroup {
+    return this.formBuilder.group({
+      number: '',
+      brand: '',
+      model: '',
+      year: '',
+    })
+  }
 
-  // setCars() {
-  //   if (this.cars) {
-  //     return this.cars.map(car => car);
-  //   } else {
-  //     return []
-  //   }
-    // const carsFormArray = this.formBuilder.array(carsArray ? carsArray : []);
-    // this.userCarsControl.setControl('carsControl', carsFormArray);
-  // }
+  addNewCar(): void {
+    this.carsControl.push(this.newCar())
+  }
 
-  // createCar() {
-  //   this.userCarsControl = this.formBuilder.group({
-  //     lastName: '',
-  //     firstName: '',
-  //     middleName: '',
-  //     carsControl: this.formBuilder.array([])
-  //   })
-  // }
+  goBack(): void {
+    this.toggle.emit()
+  }
 
-  
-
-
-  // createCar(item?: CarEntity): FormGroup {
-  //   // this.carsControl = this.userCarsControl.get('carsControl') as FormArray;
-  //   return this.formBuilder.group({
-  //     plate: new FormControl(item?.plate),
-  //     brand: new FormControl(item?.brand),
-  //     model: new FormControl(item?.model),
-  //     year: new FormControl(item?.year),
-  //   });
-  // }
-
-  // addCar(item?: CarEntity): void {
-  //   // this.carsControl = this.userCarsControl.get('carsControl') as FormArray;
-  //   this.carsControl.push(this.createCar(item))
-  // }
+  save(): void {
+    this._userService.updateOwner({ ...this.user, ...this.newValue})
+      .subscribe(() => {
+        this.toggle.emit();
+        
+      })
+  }
 }

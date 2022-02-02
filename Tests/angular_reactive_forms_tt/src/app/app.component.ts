@@ -10,8 +10,10 @@ import { CarEntity, OwnerEntity } from './owner';
 export class AppComponent implements OnInit {
   titleList = 'Владельцы aвтомобилей';
   users: OwnerEntity[] = [];
-  user?: OwnerEntity;
+  selectedUser?: OwnerEntity;
   cars?: CarEntity[];
+  isSelect: boolean = false;
+  selectedIndex: number;
   aId: number;
 
   constructor(
@@ -25,8 +27,21 @@ export class AppComponent implements OnInit {
     });
   }
 
-  getIndex(user: OwnerEntity) {
-    this.user = user;
-    this.cars = user.cars
+  getIndex(user: OwnerEntity, index: number) {
+    this.selectedUser = user;
+    this.cars = user.cars;
+    this.selectedIndex = index;
+  }
+
+  toggle(): void {
+    this.isSelect = !this.isSelect;
+  }
+
+  userSelected(): void {
+    if (this.selectedUser) {
+      this.toggle();
+    } else {
+      return;
+    }
   }
 }

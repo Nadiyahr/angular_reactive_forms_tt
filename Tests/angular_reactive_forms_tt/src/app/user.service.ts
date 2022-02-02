@@ -3,8 +3,9 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { CarEntity, OwnerEntity } from './owner';
 import { Observable, throwError } from 'rxjs';
 import {catchError} from 'rxjs/operators';
+import { MessageSpan } from '@angular/compiler/src/i18n/i18n_ast';
 
-const cudOptions = {
+const crudOptions = {
   headers: new HttpHeaders({'Content-Type': 'application/json'})
 };
 
@@ -16,7 +17,14 @@ export class UserService implements OnInit {
 
   constructor(
     private _http: HttpClient,
+    // private messagesService: MessageSpan
   ) { }
+
+  // private log(message: string): void {
+  //   this.messagesService.add('UserSertvice' + message)
+  // }
+
+
 
   ngOnInit(): void { }
 
@@ -28,12 +36,14 @@ export class UserService implements OnInit {
     return this._http.get<OwnerEntity>(`${this.usersUrl}/${id}`)
   }
 
-  // createOwner(
-  //   aLastName: string,
-  //   aFirstName: string,
-  //   aMiddleName: string,
-  //   aCars: CarEntity[]
-  // ): Observable<OwnerEntity> {
-  //   return this._http.post<any>(`${this.usersUrl}/post/1`)
-  // }
+  updateOwner(
+    user: OwnerEntity
+  ): Observable<any> {
+    console.log(user);
+    return this._http.put<any>(this.usersUrl, user, crudOptions)
+  }
+
+  generateId(users: OwnerEntity[]): number {
+    return users.length > 0 ? Math.max(...users.map(user => user.id)) + 1 : 11;
+  }
 }

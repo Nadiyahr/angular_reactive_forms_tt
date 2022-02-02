@@ -1,34 +1,39 @@
-<h1>{{ titleList }}</h1>
-
-<div>
-  <button>+ Добавить</button>
-  <button> Просмотр</button>
-  <button> Редактировать</button>
-  <button> Удалить</button>
+<div *ngIf="!isSelect">
+  <h1>{{ titleList }}</h1>
+  <div>
+    <button>+ Добавить</button>
+    <button type="button" (click)="userSelected()"> Просмотр</button>
+    <button> Редактировать</button>
+    <button> Удалить</button>
+  </div>
+  
+  <table class="table table-hover table-bordered">
+    <thead>
+      <tr>
+        <th scope="col">#</th>
+        <th scope="col">Фамилия</th>
+        <th scope="col">Иья</th>
+        <th scope="col">Отчество</th>
+        <th scope="col">Количество автомобилей</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr
+        *ngFor="let user of users; let idx = index;"
+        (click)="getIndex(user, idx)"
+        [ngStyle]="{'background-color': (selectedIndex === idx) ? '#9ec3cc' : '#fff' }"
+      >
+        <th scope="row">{{ idx + 1 }}</th>
+        <td>{{ user.lastName }}</td>
+        <td>{{ user.firstName }}</td>
+        <td>{{ user.middleName }}</td>
+        <td>{{ user.cars.length }}</td>
+       
+      </tr>
+    </tbody>
+  </table>
 </div>
 
-<table class="table table-hover table-bordered">
-  <thead>
-    <tr>
-      <th scope="col">#</th>
-      <th scope="col">Фамилия</th>
-      <th scope="col">Иья</th>
-      <th scope="col">Отчество</th>
-      <th scope="col">Количество автомобилей</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr *ngFor="let user of users; let idx = index;" (click)="getIndex(user)">
-      <th scope="row">{{ idx + 1 }}</th>
-      <td>{{ user.lastName }}</td>
-      <td>{{ user.firstName }}</td>
-      <td>{{ user.middleName }}</td>
-      <td>{{ user.cars.length }}</td>
-     
-    </tr>
-  </tbody>
-</table>
-
-<div *ngIf="user">
-  <app-add-user [user]="user" [cars]="cars"></app-add-user>
+<div *ngIf="isSelect">
+  <app-add-user [user]="selectedUser" [cars]="cars" (togle)="toggle()"></app-add-user>
 </div>

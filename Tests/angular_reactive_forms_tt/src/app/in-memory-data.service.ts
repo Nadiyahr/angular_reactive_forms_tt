@@ -11,12 +11,22 @@ export class InMemoryDataService implements InMemoryDbService {
     let users = [
       {
         id: 11,
-        firstName: 'Jhon',
-        lastName: 'Smith',
-        middleName: 'Aleksandrovith',
+        firstName: 'Петрова',
+        lastName: 'Наталья',
+        middleName: 'Игориевна',
         cars: [
-          { plate: 'XP1234PH', brand: 'KIA', model: 'Optima', year: 2019},
-          { plate: 'BC1236AE', brand: 'Hundai', model: 'Accent', year: 2009}
+          { number: 'XP1234PH', brand: 'KIA', model: 'Optima', year: 2019},
+          { number: 'BC1236AE', brand: 'Hundai', model: 'Accent', year: 2009}
+        ]
+      },
+      {
+        id: 12,
+        firstName: 'Козлова',
+        lastName: 'Ольга',
+        middleName: 'Петровна',
+        cars: [
+          { number: 'XP1234PH', brand: 'KIA', model: 'Optima', year: 2019},
+          { number: 'BC1236AE', brand: 'Hundai', model: 'Accent', year: 2009}
         ]
       }
     ]

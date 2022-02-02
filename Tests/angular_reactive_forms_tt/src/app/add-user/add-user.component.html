@@ -1,4 +1,5 @@
-<form class="row g-3" [formGroup]="userCarsControl">
+<div class="row g-3" [formGroup]="userCarsControl">
+  <h1>Владелец</h1>
   <div class="col-auto">
     <label for="ln" class="col-sm-2 col-form-label"></label>
     <input
@@ -12,7 +13,7 @@
     <label for="fn" class="col-sm-2 col-form-label"></label>
     <input
       type="text"
-      name="lastName"
+      name="firstName"
       id="fn"
       formControlName="firstName"
     >
@@ -21,29 +22,106 @@
     <label for="mn" class="col-sm-2 col-form-label"></label>
     <input
       type="text"
-      name="lastName"
+      name="middleName"
       id="mn"
       formControlName="middleName"
     >
   </div>
   <div formArrayName="carsControl">
-    <div  *ngFor="let car of carsControl['controls']; let i = index;" [formGroupName]="i">
-      <fieldset>
-        <input type="text" name="plate" formControlName="plate">
-        <input type="text" name="brand" formControlName="brand">
-        <input type="text" name="model" formControlName="model">
-        <input type="text" name="year" formControlName="year">
-        <button>Delete</button>
-      </fieldset>
+    <h2>Автомобили</h2>
+    <div class="row gx-3 gy-2 align-items-center">
+      <div class="col-sm-2">
+        <input
+          type="text"
+          value="Номер"
+          readonly class="form-control-plaintext"
+          [ngStyle]="{'font-weight': '700'}"
+        >
+      </div>
+      <div class="col-sm-2">
+        <input
+          type="text"
+          value="Марка"
+          readonly class="form-control-plaintext"
+          [ngStyle]="{'font-weight': '700'}"
+        >
+      </div>
+      <div class="col-sm-2">
+        <input
+          type="text"
+          value="Модель"
+          readonly
+          class="form-control-plaintext"
+          [ngStyle]="{'font-weight': '700'}"
+        >
+      </div>
+      <div class="col-sm-2">
+        <input
+          type="text"
+          value="Год"
+          readonly class="form-control-plaintext"
+          [ngStyle]="{'font-weight': '700'}"
+        >
+      </div>
     </div>
-    <!-- <fieldset formGroupName="i"> -->
-      <!-- <span>{{ i + 1 }}</span>
-      <input type="text" name="plate" formControlName="plate">
-      <input type="text" name="brand" formControlName="brand">
-      <input type="text" name="model" formControlName="model">
-      <input type="text" name="year" formControlName="year">
-      <button>Delete</button> -->
-    <!-- </fieldset> -->
-
+    <fieldset
+      *ngFor="let car of carsControl['controls']; let i = index;"
+      [formGroupName]="i"
+      class="row gy-2 gx-3 align-items-center"
+    >
+        <div class="col-auto">
+          <label [for]="'number' + i" class="visually-hidden"></label>
+          <input
+            [id]="'number' + i"
+            type="text"
+            name="number"
+            formControlName="number"
+            class="form-control"
+          >
+        </div>
+        <div class="col-auto">
+          <label [for]="'brand' + i" class="visually-hidden"></label>
+          <input
+            [id]="'brand' + i"
+            type="text"
+            name="brand"
+            formControlName="brand"
+            class="form-control"
+          >
+        </div>
+        <div class="col-auto">
+          <label [for]="'model' + i" class="visually-hidden"></label>
+          <input
+            [id]="'model' + i"
+            type="text"
+            name="model"
+            formControlName="model"
+            class="form-control"
+          >
+        </div>
+        <div class="col-auto">
+          <label [for]="'year' + i" class="visually-hidden"></label>
+          <input
+            [id]="'model' + i"
+            type="text"
+            name="year"
+            formControlName="year"
+            class="form-control"
+           
+          >
+        </div>
+        <div class="col-auto">
+          <button class="btn btn-primary">Delete</button>
+        </div>
+    </fieldset>
   </div>
-</form>
+</div>
+<div>
+  <div>
+    <button (click)="addNewCar()">+ Добавить автомобиль</button>
+  </div>
+  <div>
+    <button (click)="save()">Сохранить</button>
+    <button (click)="goBack()">Назад</button>
+  </div>
+</div>
