@@ -1,4 +1,4 @@
-<div *ngIf="!isSelect">
+<div *ngIf="!isSelect else elseForm">
   <h1>{{ titleList }}</h1>
   <div>
     <button>+ Добавить</button>
@@ -33,7 +33,12 @@
     </tbody>
   </table>
 </div>
-
-<div *ngIf="isSelect">
-  <app-add-user [user]="selectedUser" [cars]="cars" (togle)="toggle()"></app-add-user>
-</div>
+<ng-template #elseForm>
+  <app-add-user
+    [user]="selectedUser"
+    [cars]="cars" 
+    [isUpdated]="isUpdated"
+    (toggle)="toggle()"
+    (isListUpdate)="isListUpdate()"
+  ></app-add-user>
+</ng-template>

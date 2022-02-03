@@ -14,8 +14,11 @@ export class AddUserComponent implements OnInit {
   newValue: any;
   @Input() user?: OwnerEntity;
   @Input() cars?: CarEntity[];
-  @Input() isSelected: boolean;
+  @Input() isSelected: boolean = false;
+  @Input() isUpdated: boolean;
+  // @Output() userChange = new EventEmitter<OwnerEntity>();
   @Output() toggle = new EventEmitter();
+  @Output() isListUpdate = new EventEmitter()
 
   constructor(
     private formBuilder: FormBuilder,
@@ -26,6 +29,7 @@ export class AddUserComponent implements OnInit {
 
   ngOnInit(): void {
     this.userCarsControl = this.formBuilder.group({
+      id: new FormControl(this.user?.id),
       lastName: new FormControl(this.user?.lastName),
       firstName: new FormControl(this.user?.firstName),
       middleName: new FormControl(this.user?.middleName),
@@ -76,14 +80,26 @@ export class AddUserComponent implements OnInit {
   }
 
   goBack(): void {
+    console.log('work');
+    console.log(this.isSelected);
     this.toggle.emit()
+    console.log(this.isSelected);
   }
 
   save(): void {
-    this._userService.updateOwner({ ...this.user, ...this.newValue})
+    const carsArray = this.userCarsControl.get('carsControl') as FormArray
+    console.log(carsArray.value[2]);
+    console.log(this.cars?.length);
+    const carsLength = this.cars?.length || 0;
+    const dif = carsArray.value - carsLength;
+    console.log(...carsArray.value.slice(carsLength));
+    
+    if (this.user && carsLength < carsArray.value.length) {
+      this.user?.cars.push(...carsArray.value.slice(carsLength));
+      this._userService.updateOwner(this.user)
       .subscribe(() => {
-        this.toggle.emit();
-        
+        this.goBack()
       })
+    }
   }
 }

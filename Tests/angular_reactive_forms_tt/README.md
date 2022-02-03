@@ -4,7 +4,7 @@
 
 # AngularReactiveFormsTt
 
-ng deploy --base-href=/angular_reactive_forms_tt/
+ng deploy --base-href=angular_reactive_forms_tt
 
 This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 13.2.0.
 

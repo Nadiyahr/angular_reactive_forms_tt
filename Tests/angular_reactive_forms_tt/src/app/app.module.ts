@@ -25,7 +25,7 @@ import { UsersListComponent } from './users-list/users-list.component';
     HttpClientModule,
     HttpClientInMemoryWebApiModule.forRoot(
       InMemoryDataService,
-      {dataEncapsulation: false}
+      {dataEncapsulation: false},
     )
   ],
   providers: [UserService],

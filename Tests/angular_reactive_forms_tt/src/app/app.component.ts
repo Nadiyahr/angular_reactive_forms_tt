@@ -13,6 +13,7 @@ export class AppComponent implements OnInit {
   selectedUser?: OwnerEntity;
   cars?: CarEntity[];
   isSelect: boolean = false;
+  isUpdated: boolean = false;
   selectedIndex: number;
   aId: number;
 
@@ -21,10 +22,14 @@ export class AppComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
-    this._userService.getgetOwners()
+    this._userService.getOwners()
     .subscribe(data => {
       this.users = data;
     });
+  }
+
+  addUser() {
+
   }
 
   getIndex(user: OwnerEntity, index: number) {
@@ -34,7 +39,9 @@ export class AppComponent implements OnInit {
   }
 
   toggle(): void {
+    console.log(this.isSelect);
     this.isSelect = !this.isSelect;
+    console.log(this.isSelect);
   }
 
   userSelected(): void {
@@ -44,4 +51,20 @@ export class AppComponent implements OnInit {
       return;
     }
   }
+
+  isListUpdate(): void {
+    this.isUpdated = !this.isUpdated;
+    console.log(this.isUpdated);
+    if (this.isUpdated) {
+      this.saveUserUpdate();
+    }
+  }
+
+  saveUserUpdate() {
+    this._userService.getOwners()
+    .subscribe(data => {
+      this.users = data;
+    });
+  }
+  
 }

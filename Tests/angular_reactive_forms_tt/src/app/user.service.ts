@@ -1,13 +1,7 @@
 import { Injectable, OnInit } from '@angular/core';
-import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { CarEntity, OwnerEntity } from './owner';
+import { HttpClient } from '@angular/common/http';
+import { OwnerEntity } from './owner';
 import { Observable, throwError } from 'rxjs';
-import {catchError} from 'rxjs/operators';
-import { MessageSpan } from '@angular/compiler/src/i18n/i18n_ast';
-
-const crudOptions = {
-  headers: new HttpHeaders({'Content-Type': 'application/json'})
-};
 
 @Injectable({
   providedIn: 'root'
@@ -17,18 +11,11 @@ export class UserService implements OnInit {
 
   constructor(
     private _http: HttpClient,
-    // private messagesService: MessageSpan
   ) { }
-
-  // private log(message: string): void {
-  //   this.messagesService.add('UserSertvice' + message)
-  // }
-
-
 
   ngOnInit(): void { }
 
-  getgetOwners(): Observable<OwnerEntity[]> {
+  getOwners(): Observable<OwnerEntity[]> {
     return this._http.get<OwnerEntity[]>(this.usersUrl);
   }
 
@@ -37,10 +24,10 @@ export class UserService implements OnInit {
   }
 
   updateOwner(
-    user: OwnerEntity
+    users: OwnerEntity
   ): Observable<any> {
-    console.log(user);
-    return this._http.put<any>(this.usersUrl, user, crudOptions)
+    console.log(users);
+    return this._http.put(this.usersUrl, users)
   }
 
   generateId(users: OwnerEntity[]): number {
