@@ -10,10 +10,11 @@ import { CarEntity, OwnerEntity } from './owner';
 export class AppComponent implements OnInit {
   titleList = 'Владельцы aвтомобилей';
   users: OwnerEntity[] = [];
-  selectedUser?: OwnerEntity;
-  cars?: CarEntity[];
-  isSelect: boolean = false;
+  selectedUser!: OwnerEntity;
+  cars!: CarEntity[];
+  isSelected: boolean = false;
   isUpdated: boolean = false;
+  isReadOnly: boolean = false
   selectedIndex: number;
   aId: number;
 
@@ -29,7 +30,14 @@ export class AppComponent implements OnInit {
   }
 
   addUser() {
-
+    this.selectedUser = {
+      id: this._userService.generateId(this.users),
+      lastName: '',
+      firstName: '',
+      middleName: '',
+      cars: []
+    }
+    this.toggle()
   }
 
   getIndex(user: OwnerEntity, index: number) {
@@ -39,9 +47,17 @@ export class AppComponent implements OnInit {
   }
 
   toggle(): void {
-    console.log(this.isSelect);
-    this.isSelect = !this.isSelect;
-    console.log(this.isSelect);
+    this.isSelected = !this.isSelected;
+  }
+
+  readOnlyViev() {
+    if (this.selectedUser) {
+      this.isReadOnly = !this.isReadOnly;
+      this.toggle();
+      console.log(this.isReadOnly);
+    } else {
+      return;
+    }
   }
 
   userSelected(): void {
@@ -63,8 +79,9 @@ export class AppComponent implements OnInit {
   saveUserUpdate() {
     this._userService.getOwners()
     .subscribe(data => {
+      console.log(data);
       this.users = data;
     });
   }
-  
+
 }

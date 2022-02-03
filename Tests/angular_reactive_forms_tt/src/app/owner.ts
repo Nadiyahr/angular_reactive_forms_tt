@@ -3,7 +3,7 @@ export type CarEntity = {
   number: string;
   brand: string;
   model: string;
-  year: number;
+  year: number | null;
 }
 
 export interface OwnerEntity {

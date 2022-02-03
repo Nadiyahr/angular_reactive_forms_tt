@@ -7,6 +7,7 @@
       name="lastName"
       id="ln"
       formControlName="lastName"
+      [readonly]="isReadOnly"
     >
   </div>
   <div class="col-auto">
@@ -16,6 +17,7 @@
       name="firstName"
       id="fn"
       formControlName="firstName"
+      [readonly]="isReadOnly"
     >
   </div>
   <div class="col-auto">
@@ -25,6 +27,7 @@
       name="middleName"
       id="mn"
       formControlName="middleName"
+      [readonly]="isReadOnly"
     >
   </div>
   <div formArrayName="carsControl">
@@ -77,6 +80,7 @@
             name="number"
             formControlName="number"
             class="form-control"
+            [readonly]="isReadOnly"
           >
         </div>
         <div class="col-auto">
@@ -87,6 +91,7 @@
             name="brand"
             formControlName="brand"
             class="form-control"
+            [readonly]="isReadOnly"
           >
         </div>
         <div class="col-auto">
@@ -97,6 +102,7 @@
             name="model"
             formControlName="model"
             class="form-control"
+            [readonly]="isReadOnly"
           >
         </div>
         <div class="col-auto">
@@ -107,21 +113,22 @@
             name="year"
             formControlName="year"
             class="form-control"
+            [readonly]="isReadOnly"
            
           >
         </div>
         <div class="col-auto">
-          <button class="btn btn-primary">Delete</button>
+          <button class="btn btn-primary" [disabled]="isReadOnly">Delete</button>
         </div>
     </fieldset>
   </div>
 </div>
 <div>
   <div>
-    <button (click)="addNewCar()">+ Добавить автомобиль</button>
+    <button [disabled]="isReadOnly" (click)="addNewCar()">+ Добавить автомобиль</button>
   </div>
   <div>
-    <button (click)="save()">Сохранить</button>
+    <button [disabled]="isReadOnly" (click)="save()">Сохранить</button>
     <button (click)="goBack()">Назад</button>
   </div>
 </div>

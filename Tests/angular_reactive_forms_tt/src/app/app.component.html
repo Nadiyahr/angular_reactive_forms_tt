@@ -1,9 +1,9 @@
-<div *ngIf="!isSelect else elseForm">
+<div *ngIf="!isSelected else elseForm">
   <h1>{{ titleList }}</h1>
   <div>
-    <button>+ Добавить</button>
-    <button type="button" (click)="userSelected()"> Просмотр</button>
-    <button> Редактировать</button>
+    <button (click)="addUser()">+ Добавить</button>
+    <button type="button" (click)="readOnlyViev()"> Просмотр</button>
+    <button (click)="userSelected()"> Редактировать</button>
     <button> Удалить</button>
   </div>
   
@@ -38,7 +38,9 @@
     [user]="selectedUser"
     [cars]="cars" 
     [isUpdated]="isUpdated"
+    [isReadOnly]="isReadOnly"
     (toggle)="toggle()"
     (isListUpdate)="isListUpdate()"
+    (readOnlyViev)="readOnlyViev()"
   ></app-add-user>
 </ng-template>

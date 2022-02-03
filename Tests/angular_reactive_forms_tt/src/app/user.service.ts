@@ -24,10 +24,14 @@ export class UserService implements OnInit {
   }
 
   updateOwner(
-    users: OwnerEntity
+    users: OwnerEntity, id: number
   ): Observable<any> {
     console.log(users);
-    return this._http.put(this.usersUrl, users)
+    return this._http.put(`${this.usersUrl}/${id}`, users)
+  }
+
+  createOwner() {
+
   }
 
   generateId(users: OwnerEntity[]): number {

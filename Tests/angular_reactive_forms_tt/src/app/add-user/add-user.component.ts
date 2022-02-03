@@ -12,13 +12,14 @@ import { CarEntity, OwnerEntity } from '../owner';
 export class AddUserComponent implements OnInit {
   userCarsControl: FormGroup;
   newValue: any;
-  @Input() user?: OwnerEntity;
-  @Input() cars?: CarEntity[];
+  @Input() user!: OwnerEntity;
+  @Input() cars!: CarEntity[];
   @Input() isSelected: boolean = false;
   @Input() isUpdated: boolean;
-  // @Output() userChange = new EventEmitter<OwnerEntity>();
+  @Input() isReadOnly: boolean;
   @Output() toggle = new EventEmitter();
-  @Output() isListUpdate = new EventEmitter()
+  @Output() isListUpdate = new EventEmitter();
+  @Output() readOnlyViev = new EventEmitter();
 
   constructor(
     private formBuilder: FormBuilder,
@@ -36,11 +37,10 @@ export class AddUserComponent implements OnInit {
       carsControl: this.formBuilder.array([])
     })
 
-    this.userCarsControl.setControl('carsControl', this.setExistingCars(this.cars ? this.cars : []))
+    this.userCarsControl.setControl('carsControl', this.setExistingCars(this.cars))
     
 
     this.userCarsControl.valueChanges.subscribe((value) => {
-      console.log(value);
       this.newValue = value;
     });
   }
@@ -68,6 +68,7 @@ export class AddUserComponent implements OnInit {
 
   newCar(): FormGroup {
     return this.formBuilder.group({
+      userId: this.user?.id,
       number: '',
       brand: '',
       model: '',
@@ -80,25 +81,25 @@ export class AddUserComponent implements OnInit {
   }
 
   goBack(): void {
-    console.log('work');
-    console.log(this.isSelected);
-    this.toggle.emit()
-    console.log(this.isSelected);
+    if (this.isReadOnly) {
+      this.readOnlyViev.emit()
+    } else {
+      this.toggle.emit()
+    }
   }
 
   save(): void {
     const carsArray = this.userCarsControl.get('carsControl') as FormArray
-    console.log(carsArray.value[2]);
-    console.log(this.cars?.length);
     const carsLength = this.cars?.length || 0;
-    const dif = carsArray.value - carsLength;
-    console.log(...carsArray.value.slice(carsLength));
-    
-    if (this.user && carsLength < carsArray.value.length) {
+    if (this.user) {
+      this.user.firstName = this.newValue.firstName;
+      this.user.lastName = this.newValue.lastName;
+      this.user.middleName = this.newValue.middleName;
       this.user?.cars.push(...carsArray.value.slice(carsLength));
-      this._userService.updateOwner(this.user)
+      this._userService.updateOwner(this.user, this.user.id)
       .subscribe(() => {
         this.goBack()
+        this.isListUpdate.emit()
       })
     }
   }
