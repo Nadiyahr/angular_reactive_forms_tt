@@ -1,34 +1,64 @@
 <div class="row g-3" [formGroup]="userCarsControl">
   <h1>Владелец</h1>
-  <div class="col-auto">
-    <label for="ln" class="col-sm-2 col-form-label"></label>
-    <input
-      type="text"
-      name="lastName"
-      id="ln"
-      formControlName="lastName"
-      [readonly]="isReadOnly"
+  <div class="mb-3 row">
+    <label
+      for="ln"
+      class="col-sm-2 col-form-label"
+      [ngStyle]="{'font-weight': '700'}"
     >
+      Фамилия
+    </label>
+    <div class="col-sm-4">
+      <input
+        type="text"
+        name="lastName"
+        id="ln"
+        formControlName="lastName"
+        [readonly]="isReadOnly"
+        class="form-control"
+        required
+      >
+    </div>
   </div>
-  <div class="col-auto">
-    <label for="fn" class="col-sm-2 col-form-label"></label>
-    <input
-      type="text"
-      name="firstName"
-      id="fn"
-      formControlName="firstName"
-      [readonly]="isReadOnly"
+  <div class="mb-3 row">
+    <label
+      for="fn"
+      class="col-sm-2 col-form-label"
+      [ngStyle]="{'font-weight': '700'}"
     >
+      Имя
+    </label>
+    <div class="col-sm-4">
+      <input
+        type="text"
+        name="firstName"
+        id="fn"
+        formControlName="firstName"
+        [readonly]="isReadOnly"
+        class="form-control"
+        required
+      >
+    </div>
   </div>
-  <div class="col-auto">
-    <label for="mn" class="col-sm-2 col-form-label"></label>
-    <input
-      type="text"
-      name="middleName"
-      id="mn"
-      formControlName="middleName"
-      [readonly]="isReadOnly"
+  <div class="mb-3 row">
+    <label
+      for="mn"
+      class="col-sm-2 col-form-label"
+      [ngStyle]="{'font-weight': '700'}"
     >
+      Отчество
+    </label>
+    <div class="col-sm-4">
+      <input
+        type="text"
+        name="middleName"
+        id="mn"
+        formControlName="middleName"
+        [readonly]="isReadOnly"
+        class="form-control"
+        required
+      >
+    </div>
   </div>
   <div formArrayName="carsControl">
     <h2>Автомобили</h2>
@@ -72,7 +102,7 @@
       [formGroupName]="i"
       class="row gy-2 gx-3 align-items-center"
     >
-        <div class="col-auto">
+        <div class="col-sm-2 mb-2">
           <label [for]="'number' + i" class="visually-hidden"></label>
           <input
             [id]="'number' + i"
@@ -81,9 +111,10 @@
             formControlName="number"
             class="form-control"
             [readonly]="isReadOnly"
+            required
           >
         </div>
-        <div class="col-auto">
+        <div class="col-sm-2 mb-2">
           <label [for]="'brand' + i" class="visually-hidden"></label>
           <input
             [id]="'brand' + i"
@@ -92,9 +123,10 @@
             formControlName="brand"
             class="form-control"
             [readonly]="isReadOnly"
+            required
           >
         </div>
-        <div class="col-auto">
+        <div class="col-sm-2 mb-2">
           <label [for]="'model' + i" class="visually-hidden"></label>
           <input
             [id]="'model' + i"
@@ -103,9 +135,10 @@
             formControlName="model"
             class="form-control"
             [readonly]="isReadOnly"
+            required
           >
         </div>
-        <div class="col-auto">
+        <div class="col-sm-2 mb-2">
           <label [for]="'year' + i" class="visually-hidden"></label>
           <input
             [id]="'model' + i"
@@ -114,21 +147,33 @@
             formControlName="year"
             class="form-control"
             [readonly]="isReadOnly"
-           
+            required
           >
         </div>
-        <div class="col-auto">
-          <button class="btn btn-primary" [disabled]="isReadOnly">Delete</button>
+        <div class="col-sm-2 mb-2">
+          <button class="btn btn-danger" [disabled]="isReadOnly">Delete</button>
         </div>
     </fieldset>
   </div>
 </div>
 <div>
   <div>
-    <button [disabled]="isReadOnly" (click)="addNewCar()">+ Добавить автомобиль</button>
+    <button
+      [disabled]="isReadOnly"
+      (click)="addNewCar()"
+      class="mt-3 btn btn-primary"
+    >
+      + Добавить автомобиль
+    </button>
   </div>
   <div>
-    <button [disabled]="isReadOnly" (click)="save()">Сохранить</button>
-    <button (click)="goBack()">Назад</button>
+    <button
+      class="my-3 me-3 btn btn-primary"
+      [disabled]="isReadOnly"
+      (click)="save()"
+    >
+      Сохранить
+    </button>
+    <button class="my-3 btn btn-secondary" (click)="goBack()">Назад</button>
   </div>
 </div>

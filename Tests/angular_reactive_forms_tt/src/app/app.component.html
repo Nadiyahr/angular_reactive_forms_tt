@@ -1,46 +1,55 @@
-<div *ngIf="!isSelected else elseForm">
-  <h1>{{ titleList }}</h1>
-  <div>
-    <button (click)="addUser()">+ Добавить</button>
-    <button type="button" (click)="readOnlyViev()"> Просмотр</button>
-    <button (click)="userSelected()"> Редактировать</button>
-    <button> Удалить</button>
-  </div>
-  
-  <table class="table table-hover table-bordered">
-    <thead>
-      <tr>
-        <th scope="col">#</th>
-        <th scope="col">Фамилия</th>
-        <th scope="col">Иья</th>
-        <th scope="col">Отчество</th>
-        <th scope="col">Количество автомобилей</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr
-        *ngFor="let user of users; let idx = index;"
-        (click)="getIndex(user, idx)"
-        [ngStyle]="{'background-color': (selectedIndex === idx) ? '#9ec3cc' : '#fff' }"
+<div class="container">
+  <div class="m-4" *ngIf="!isSelected else elseForm">
+    <h1>{{ titleList }}</h1>
+    <div>
+      <button class="my-2 me-3" (click)="addUser()">+ Добавить</button>
+      <button
+        type="button"
+        (click)="readOnlyViev()"
+        [disabled]="!isIndex"
+        class="my-2 mx-1"
       >
-        <th scope="row">{{ idx + 1 }}</th>
-        <td>{{ user.lastName }}</td>
-        <td>{{ user.firstName }}</td>
-        <td>{{ user.middleName }}</td>
-        <td>{{ user.cars.length }}</td>
-       
-      </tr>
-    </tbody>
-  </table>
+        Просмотр
+      </button>
+      <button class="my-2 mx-1" (click)="userSelected()" [disabled]="!isIndex"> Редактировать</button>
+      <button class="my-2 mx-1" [disabled]="!isIndex"> Удалить</button>
+    </div>
+    
+    <table class="table table-hover table-bordered">
+      <thead>
+        <tr>
+          <th scope="col">#</th>
+          <th scope="col">Фамилия</th>
+          <th scope="col">Имя</th>
+          <th scope="col">Отчество</th>
+          <th scope="col">Количество автомобилей</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr
+          *ngFor="let user of users; let idx = index;"
+          (click)="getIndex(user, idx)"
+          [ngStyle]="{'background-color': (selectedIndex === idx) ? '#9ec3cc' : '#fff' }"
+        >
+          <th scope="row">{{ idx + 1 }}</th>
+          <td>{{ user.lastName }}</td>
+          <td>{{ user.firstName }}</td>
+          <td>{{ user.middleName }}</td>
+          <td>{{ user.cars.length }}</td>
+         
+        </tr>
+      </tbody>
+    </table>
+  </div>
+  <ng-template #elseForm>
+    <app-add-user
+      [user]="selectedUser"
+      [cars]="cars" 
+      [isUpdated]="isUpdated"
+      [isReadOnly]="isReadOnly"
+      (toggle)="toggle()"
+      (isListUpdate)="isListUpdate()"
+      (readOnlyViev)="readOnlyViev()"
+    ></app-add-user>
+  </ng-template>
 </div>
-<ng-template #elseForm>
-  <app-add-user
-    [user]="selectedUser"
-    [cars]="cars" 
-    [isUpdated]="isUpdated"
-    [isReadOnly]="isReadOnly"
-    (toggle)="toggle()"
-    (isListUpdate)="isListUpdate()"
-    (readOnlyViev)="readOnlyViev()"
-  ></app-add-user>
-</ng-template>

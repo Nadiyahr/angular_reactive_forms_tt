@@ -13,7 +13,7 @@ export class AddUserComponent implements OnInit {
   userCarsControl: FormGroup;
   newValue: any;
   @Input() user!: OwnerEntity;
-  @Input() cars!: CarEntity[];
+  @Input() cars: CarEntity[];
   @Input() isSelected: boolean = false;
   @Input() isUpdated: boolean;
   @Input() isReadOnly: boolean;

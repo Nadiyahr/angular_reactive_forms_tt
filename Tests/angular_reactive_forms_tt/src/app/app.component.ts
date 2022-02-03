@@ -16,6 +16,7 @@ export class AppComponent implements OnInit {
   isUpdated: boolean = false;
   isReadOnly: boolean = false
   selectedIndex: number;
+  isIndex: boolean = false;
   aId: number;
 
   constructor(
@@ -37,6 +38,14 @@ export class AppComponent implements OnInit {
       middleName: '',
       cars: []
     }
+
+    this.cars = [{
+      userId: this._userService.generateId(this.users),
+      number: '',
+      brand: '',
+      model: '',
+      year: null,
+    }]
     this.toggle()
   }
 
@@ -44,6 +53,7 @@ export class AppComponent implements OnInit {
     this.selectedUser = user;
     this.cars = user.cars;
     this.selectedIndex = index;
+    this.isIndex = true;
   }
 
   toggle(): void {
