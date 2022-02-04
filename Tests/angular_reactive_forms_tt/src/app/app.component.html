@@ -11,8 +11,20 @@
       >
         Просмотр
       </button>
-      <button class="my-2 mx-1" (click)="userSelected()" [disabled]="!isIndex"> Редактировать</button>
-      <button class="my-2 mx-1" [disabled]="!isIndex"> Удалить</button>
+      <button
+        class="my-2 mx-1"
+        (click)="userSelected()"
+        [disabled]="!isIndex"
+      >
+        Редактировать
+      </button>
+      <button
+        class="my-2 mx-1"
+        [disabled]="!isIndex"
+        (click)="deleteUser(selectedUser.id)"
+      >
+        Удалить
+      </button>
     </div>
     
     <table class="table table-hover table-bordered">

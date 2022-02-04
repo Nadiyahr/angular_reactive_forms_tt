@@ -150,8 +150,15 @@
             required
           >
         </div>
-        <div class="col-sm-2 mb-2">
-          <button class="btn btn-danger" [disabled]="isReadOnly">Delete</button>
+        <div class="col-sm-2 mb-2" >
+          <button
+            class="btn btn-danger"
+            [disabled]="isReadOnly"
+            (click)="getGroup($event)"
+            [id]="i + 'btn'"
+          >
+            Delete
+          </button>
         </div>
     </fieldset>
   </div>

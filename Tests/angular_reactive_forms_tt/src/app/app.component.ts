@@ -24,10 +24,7 @@ export class AppComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
-    this._userService.getOwners()
-    .subscribe(data => {
-      this.users = data;
-    });
+    this.getData()
   }
 
   addUser() {
@@ -78,18 +75,24 @@ export class AppComponent implements OnInit {
     }
   }
 
+  deleteUser(id: number): void {
+    console.log(id + 'from app')
+    this._userService.deleteOwner(id);
+    this.getData();
+    this.isIndex = false;
+  }
+
   isListUpdate(): void {
     this.isUpdated = !this.isUpdated;
     console.log(this.isUpdated);
     if (this.isUpdated) {
-      this.saveUserUpdate();
+      this.getData();
     }
   }
 
-  saveUserUpdate() {
+  getData() {
     this._userService.getOwners()
     .subscribe(data => {
-      console.log(data);
       this.users = data;
     });
   }

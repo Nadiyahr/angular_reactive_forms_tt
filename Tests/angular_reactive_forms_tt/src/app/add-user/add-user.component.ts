@@ -79,6 +79,11 @@ export class AddUserComponent implements OnInit {
   addNewCar(): void {
     this.carsControl.push(this.newCar())
   }
+  getGroup(e: any) {
+    const indx = parseInt(e.target.id);
+    this.cars.splice(indx, 1);
+    this.userCarsControl.setControl('carsControl', this.setExistingCars(this.cars))
+  }
 
   goBack(): void {
     if (this.isReadOnly) {

@@ -20,18 +20,25 @@ export class UserService implements OnInit {
   }
 
   getOwnerById(id: number): Observable<OwnerEntity> {
-    return this._http.get<OwnerEntity>(`${this.usersUrl}/${id}`)
+    return this._http.get<OwnerEntity>(`${this.usersUrl}/${id}`);
   }
 
   updateOwner(
     users: OwnerEntity, id: number
   ): Observable<any> {
     console.log(users);
-    return this._http.put(`${this.usersUrl}/${id}`, users)
+    return this._http.put(`${this.usersUrl}/${id}`, users);
   }
 
-  createOwner() {
+  createOwner(
+    users: OwnerEntity
+  ): Observable<any> {
+    return this._http.post(`${this.usersUrl}`, users);
+  }
 
+  deleteOwner(id: number): Observable<any> {
+    console.log(id + 'from service')
+    return this._http.delete(`${this.usersUrl}/${id}`);
   }
 
   generateId(users: OwnerEntity[]): number {
