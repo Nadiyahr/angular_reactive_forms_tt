@@ -26,6 +26,7 @@ export class AddUserComponent implements OnInit {
   @Input() isSelected: boolean = false;
   @Input() isUpdated: boolean;
   @Input() isReadOnly: boolean;
+  @Input() arrayOfNumbers: string[];
   @Output() toggle = new EventEmitter();
   @Output() isListUpdate = new EventEmitter();
   @Output() readOnlyViev = new EventEmitter();
@@ -41,14 +42,15 @@ export class AddUserComponent implements OnInit {
       id: new FormControl(this.user?.id),
       lastName: new FormControl(this.user?.lastName, [
         Validators.required,
-        Validators.minLength(5)]),
+        Validators.pattern("^[А-Я][а-я]{1,20}$")
+      ]),
       firstName: new FormControl(this.user?.firstName, [
         Validators.required,
-        Validators.minLength(4)
+        Validators.pattern("^[А-Я][а-я]+$")
       ]),
       middleName: new FormControl(this.user?.middleName ,[
         Validators.required,
-        Validators.minLength(6)
+        Validators.pattern("^[А-Я][а-я]+$")
       ]),
       carsControl: this.formBuilder.array([])
     })
@@ -58,7 +60,7 @@ export class AddUserComponent implements OnInit {
     this.userCarsControl.valueChanges.subscribe((value) => {
       this.newValue = value;
     });
-  }
+ }
 
   get carsControl() {
     return this.userCarsControl.get('carsControl') as FormArray;
@@ -70,18 +72,13 @@ export class AddUserComponent implements OnInit {
       formArray.push(
         this.formBuilder.group({
           userId: new FormControl(car.userId),
-          number: new FormControl(car.number, [
+          number: new FormControl(car.number,  [
             Validators.required,
-            Validators.pattern("^[A-Z]{2}[0-9]{4}[A-Z]{2}$")
+            Validators.pattern("^[A-Z]{2}[0-9]{4}[A-Z]{2}$"),
+            this.carNumberValidator()
           ]),
-          brand: new FormControl(car.brand, [
-            Validators.required,
-            Validators.minLength(3)
-          ]),
-          model: new FormControl(car.model, [
-            Validators.required,
-            Validators.minLength(2)
-          ]),
+          brand: new FormControl(car.brand, [Validators.required, Validators.pattern("^[A-Z].*$")]),
+          model: new FormControl(car.model, [Validators.required, Validators.pattern("^[A-Z].*$")]),
           year: new FormControl(car.year, [
             Validators.required,
             this.minMaxYearForbiden(1990, new Date().getFullYear())
@@ -98,10 +95,11 @@ export class AddUserComponent implements OnInit {
       userId: this.user?.id,
       number: ['', [
         Validators.required,
-        Validators.pattern("^[A-Z]{2}[0-9]{4}[A-Z]{2}$")
+        Validators.pattern("^[A-Z]{2}[0-9]{4}[A-Z]{2}$"),
+        this.carNumberValidator()
       ]],
-      brand: ['', [Validators.required, Validators.minLength(3)]],
-      model: ['', [Validators.required, Validators.minLength(2)]],
+      brand: ['', [Validators.required, Validators.pattern("^[A-Z][a-z]{2,20}$")]],
+      model: ['', [Validators.required, Validators.pattern("^[A-Z][a-z]{2,20}$")]],
       year: ['', [
         Validators.required,
         this.minMaxYearForbiden(1990, new Date().getFullYear())
@@ -113,21 +111,36 @@ export class AddUserComponent implements OnInit {
     this.carsControl.push(this.newCar())
   }
 
+  carNumberValidator(): ValidatorFn {
+    return (control: AbstractControl): ValidationErrors | null => {
+      let value: string = control.value;
+
+      if (value && this.arrayOfNumbers.includes(value)) {
+        return {
+          'carNumberValidator': true,
+          'dulicatesNumber': {value: value}
+        }
+      }
+
+      return null;
+    }
+  }
+
   minMaxYearForbiden(min: number, max: number): ValidatorFn {
-    return (control: AbstractControl): ValidationErrors| null => {
+    return (control: AbstractControl): ValidationErrors | null => {
       let value: number = +control.value;
 
       if (value < +min) {
         return {
           'minMaxYearForbiden': true,
-          'requiredValue': min
+          'requiredMinValue': min
         }
       }
 
       if (value > +max) {
         return {
           'minMaxYearForbiden': true,
-          'requiredValue': min
+          'requiredMaxValue': max
         }
       }
       return null;

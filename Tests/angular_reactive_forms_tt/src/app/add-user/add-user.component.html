@@ -16,20 +16,11 @@
         formControlName="lastName"
         [readonly]="isReadOnly"
         class="form-control"
+        [ngClass]="{'is-invalid': (userCarsControl.controls['lastName'].invalid
+        && (userCarsControl.controls['lastName'].dirty
+          || userCarsControl.controls['lastName'].touched))}"
         required
       >
-      <div
-        *ngIf="userCarsControl.controls['lastName'].invalid
-          && (userCarsControl.controls['lastName'].dirty
-            || userCarsControl.controls['lastName'].touched)"
-        class="alert alert-danger"
-      >
-        <div
-          *ngIf="userCarsControl.controls['lastName'].errors"
-        >
-          Name is required.
-        </div>
-      </div>
     </div>
   </div>
   <div class="mb-3 row">
@@ -48,20 +39,11 @@
         formControlName="firstName"
         [readonly]="isReadOnly"
         class="form-control"
+        [ngClass]="{'is-invalid': (userCarsControl.controls['firstName'].invalid
+        && (userCarsControl.controls['firstName'].dirty
+          || userCarsControl.controls['firstName'].touched))}"
         required
       >
-      <div
-        *ngIf="userCarsControl.controls['firstName'].invalid
-          && (userCarsControl.controls['firstName'].dirty
-            || userCarsControl.controls['firstName'].touched)"
-        class="alert alert-danger"
-      >
-        <div
-          *ngIf="userCarsControl.controls['firstName'].errors"
-        >
-          Name is required.
-        </div>
-    </div>
     </div>
   </div>
   <div class="mb-3 row">
@@ -80,20 +62,17 @@
         formControlName="middleName"
         [readonly]="isReadOnly"
         class="form-control"
+        [ngClass]="{'is-invalid': (userCarsControl.controls['middleName'].invalid
+        && (userCarsControl.controls['middleName'].dirty
+          || userCarsControl.controls['middleName'].touched))}"
         required
       >
-      <div
-        *ngIf="userCarsControl.controls['middleName'].invalid
-          && (userCarsControl.controls['middleName'].dirty
-            || userCarsControl.controls['middleName'].touched)"
-        class="alert alert-danger"
+      <!-- <div class="invalid-tooltip" *ngIf="userCarsControl.controls['middleName'].invalid
+        && (userCarsControl.controls['middleName'].dirty
+          || userCarsControl.controls['middleName'].touched)"
       >
-        <div
-          *ngIf="userCarsControl.controls['middleName'].errors"
-        >
-          Name is required.
-        </div>
-    </div>
+        * Введите отчество !!
+      </div> -->
     </div>
   </div>
 
@@ -153,6 +132,9 @@
             [readonly]="isReadOnly"
             required
           >
+          <div class="invalid-tooltip" *ngIf="carsControl.controls[i].get('number')?.touched && carsControl.controls[i].get('number')?.hasError('dulicatesNumber')">
+            * Номер уже существует !!
+          </div>
         </div>
         <div class="col-sm-2 mb-2">
           <label [for]="'brand' + i" class="visually-hidden"></label>
@@ -198,6 +180,12 @@
             [readonly]="isReadOnly"
             required
           >
+          <div class="invalid-tooltip" *ngIf="carsControl.controls[i].get('year')?.touched && carsControl.controls[i].get('year')?.hasError('requiredMinValue')">
+            * Год не менше 1990 !!
+          </div>
+          <div class="invalid-tooltip" *ngIf="carsControl.controls[i].get('year')?.touched && carsControl.controls[i].get('year')?.hasError('requiredMaxValue')">
+            * Год не болше текущего !!
+          </div>
         </div>
         <div class="col-sm-2 mb-2" >
           <button

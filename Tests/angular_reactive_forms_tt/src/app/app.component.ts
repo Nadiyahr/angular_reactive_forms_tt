@@ -18,13 +18,14 @@ export class AppComponent implements OnInit {
   selectedIndex: number | null;
   isIndex: boolean = false;
   aId: number;
+  numbersArray: string[];
 
   constructor(
     private _userService: UserService,
   ) { }
 
   ngOnInit(): void {
-    this.getData()
+    this.getData();
   }
 
   addUser() {
@@ -71,6 +72,8 @@ export class AppComponent implements OnInit {
 
   userSelected(): void {
     if (this.selectedUser) {
+      console.log(this.users.map(user => user.cars.map(car => car.number)).flat())
+      this.numbersArray = this.users.map(user => user.cars.map(car => car.number)).flat();
       this.toggle();
     } else {
       return;
@@ -100,5 +103,9 @@ export class AppComponent implements OnInit {
       this.users = data;
     });
   }
+
+  // getNumbersForValidation(): void {
+  //   this.numbersArray = 
+  // }
 
 }
