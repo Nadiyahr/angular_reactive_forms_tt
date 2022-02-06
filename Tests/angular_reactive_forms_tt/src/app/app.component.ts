@@ -15,7 +15,7 @@ export class AppComponent implements OnInit {
   isSelected: boolean = false;
   isUpdated: boolean = false;
   isReadOnly: boolean = false
-  selectedIndex: number;
+  selectedIndex: number | null;
   isIndex: boolean = false;
   aId: number;
 
@@ -55,13 +55,15 @@ export class AppComponent implements OnInit {
 
   toggle(): void {
     this.isSelected = !this.isSelected;
+    if (!this.isSelected) {
+      this.selectedIndex = null;
+    }
   }
 
   readOnlyViev() {
     if (this.selectedUser) {
       this.isReadOnly = !this.isReadOnly;
       this.toggle();
-      console.log(this.isReadOnly);
     } else {
       return;
     }
@@ -76,16 +78,18 @@ export class AppComponent implements OnInit {
   }
 
   deleteUser(id: number): void {
-    console.log(id + 'from app')
-    this._userService.deleteOwner(id);
+    this._userService.deleteOwner(id)
+      .subscribe();
     this.getData();
-    this.isIndex = false;
+    console.log(this.users)
+
   }
 
   isListUpdate(): void {
     this.isUpdated = !this.isUpdated;
-    console.log(this.isUpdated);
     if (this.isUpdated) {
+      this._userService.updateOwner(this.selectedUser, this.selectedUser.id)
+        .subscribe()
       this.getData();
     }
   }

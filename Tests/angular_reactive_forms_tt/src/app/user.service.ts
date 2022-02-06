@@ -1,6 +1,6 @@
 import { Injectable, OnInit } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { OwnerEntity } from './owner';
+import { CarEntity, OwnerEntity } from './owner';
 import { Observable, throwError } from 'rxjs';
 
 @Injectable({
@@ -26,18 +26,28 @@ export class UserService implements OnInit {
   updateOwner(
     users: OwnerEntity, id: number
   ): Observable<any> {
-    console.log(users);
     return this._http.put(`${this.usersUrl}/${id}`, users);
   }
 
   createOwner(
-    users: OwnerEntity
+    aLastName: string,
+    aFirstName: string,
+    aMiddleName:string,
+    aCars: CarEntity[]
   ): Observable<any> {
-    return this._http.post(`${this.usersUrl}`, users);
+    let users: OwnerEntity[] = [];
+    this.getOwners().subscribe(data => users = data)
+    const aId = this.generateId(users)
+    return this._http.post(`${this.usersUrl}`, {
+      id: aId,
+      lastName: aLastName,
+      firstName: aFirstName,
+      middleName: aMiddleName,
+      cars: aCars
+    });
   }
 
   deleteOwner(id: number): Observable<any> {
-    console.log(id + 'from service')
     return this._http.delete(`${this.usersUrl}/${id}`);
   }
 
