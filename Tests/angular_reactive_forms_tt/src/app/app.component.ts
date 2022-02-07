@@ -72,7 +72,6 @@ export class AppComponent implements OnInit {
 
   userSelected(): void {
     if (this.selectedUser) {
-      console.log(this.users.map(user => user.cars.map(car => car.number)).flat())
       this.numbersArray = this.users.map(user => user.cars.map(car => car.number)).flat();
       this.toggle();
     } else {
@@ -84,7 +83,6 @@ export class AppComponent implements OnInit {
     this._userService.deleteOwner(id)
       .subscribe();
     this.getData();
-    console.log(this.users)
 
   }
 

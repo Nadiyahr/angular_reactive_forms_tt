@@ -72,17 +72,21 @@ export class AddUserComponent implements OnInit {
       formArray.push(
         this.formBuilder.group({
           userId: new FormControl(car.userId),
-          number: new FormControl(car.number,  [
-            Validators.required,
-            Validators.pattern("^[A-Z]{2}[0-9]{4}[A-Z]{2}$"),
-            this.carNumberValidator()
-          ]),
-          brand: new FormControl(car.brand, [Validators.required, Validators.pattern("^[A-Z].*$")]),
-          model: new FormControl(car.model, [Validators.required, Validators.pattern("^[A-Z].*$")]),
-          year: new FormControl(car.year, [
-            Validators.required,
-            this.minMaxYearForbiden(1990, new Date().getFullYear())
-          ]),
+          number: new FormControl(car.number,
+          //  [ Validators.required,
+          //   Validators.pattern("^[A-Z]{2}[0-9]{4}[A-Z]{2}$"),
+          //   this.carNumberValidator()]
+          ),
+          brand: new FormControl(car.brand, 
+            // [Validators.required, Validators.pattern("^[A-Z].*$")]
+            ),
+          model: new FormControl(car.model, 
+            // [Validators.required, Validators.pattern("^[A-Z].*$")]
+            ),
+          year: new FormControl(car.year, 
+            // [Validators.required,
+            // this.minMaxYearForbiden(1990, new Date().getFullYear())]
+          ),
         })
       )
     })
@@ -130,14 +134,14 @@ export class AddUserComponent implements OnInit {
     return (control: AbstractControl): ValidationErrors | null => {
       let value: number = +control.value;
 
-      if (value < +min) {
+      if (value && value < +min) {
         return {
           'minMaxYearForbiden': true,
           'requiredMinValue': min
         }
       }
 
-      if (value > +max) {
+      if (value && value > +max) {
         return {
           'minMaxYearForbiden': true,
           'requiredMaxValue': max

@@ -17,8 +17,7 @@
         [readonly]="isReadOnly"
         class="form-control"
         [ngClass]="{'is-invalid': (userCarsControl.controls['lastName'].invalid
-        && (userCarsControl.controls['lastName'].dirty
-          || userCarsControl.controls['lastName'].touched))}"
+        && (userCarsControl.controls['lastName'].touched))}"
         required
       >
     </div>
@@ -127,12 +126,12 @@
             formControlName="number"
             class="form-control"
             [ngClass]="{'is-invalid': (carsControl.controls[i].get('number')?.invalid
-            && (carsControl.controls[i].get('number')?.dirty
+              && (carsControl.controls[i].get('number')?.dirty
               || carsControl.controls[i].get('number')?.touched))}"
             [readonly]="isReadOnly"
             required
           >
-          <div class="invalid-tooltip" *ngIf="carsControl.controls[i].get('number')?.touched && carsControl.controls[i].get('number')?.hasError('dulicatesNumber')">
+          <div class="invalid-tooltip" *ngIf="carsControl.controls[i].get('number')?.hasError('dulicatesNumber')">
             * Номер уже существует !!
           </div>
         </div>
@@ -146,7 +145,7 @@
             class="form-control"
             [ngClass]="{'is-invalid': (carsControl.controls[i].get('brand')?.invalid
             && (carsControl.controls[i].get('brand')?.dirty
-              || carsControl.controls[i].get('brand')?.touched))}"
+            || carsControl.controls[i].get('brand')?.touched))}"
             [readonly]="isReadOnly"
             required
           >
@@ -161,7 +160,7 @@
             class="form-control"
             [ngClass]="{'is-invalid': (carsControl.controls[i].get('model')?.invalid
             && (carsControl.controls[i].get('model')?.dirty
-              || carsControl.controls[i].get('model')?.touched))}"
+            || carsControl.controls[i].get('model')?.touched))}"
             [readonly]="isReadOnly"
             required
           >
@@ -176,7 +175,7 @@
             class="form-control"
             [ngClass]="{'is-invalid': (carsControl.controls[i].get('year')?.invalid
             && (carsControl.controls[i].get('year')?.dirty
-              || carsControl.controls[i].get('year')?.touched))}"
+            || carsControl.controls[i].get('year')?.touched))}"
             [readonly]="isReadOnly"
             required
           >
@@ -214,7 +213,6 @@
         type="submit"
         class="my-3 me-3 btn btn-primary"
         [disabled]="!userCarsControl.valid || isReadOnly || userCarsControl.untouched"
-        (click)="onSubmit()"
       >
         Сохранить
       </button>
