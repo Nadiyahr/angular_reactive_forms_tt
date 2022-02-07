@@ -17,9 +17,12 @@
         [readonly]="isReadOnly"
         class="form-control"
         [ngClass]="{'is-invalid': (userCarsControl.controls['lastName'].invalid
-        && (userCarsControl.controls['lastName'].touched))}"
+        && userCarsControl.controls['lastName'].touched)}"
         required
       >
+      <div class="invalid-tooltip" *ngIf="userCarsControl.controls['lastName'].invalid">
+        * Введите фамилию !!
+      </div>
     </div>
   </div>
   <div class="mb-3 row">
@@ -43,6 +46,9 @@
           || userCarsControl.controls['firstName'].touched))}"
         required
       >
+      <div class="invalid-tooltip" *ngIf="userCarsControl.controls['firstName'].invalid">
+        * Введите имя !!
+      </div>
     </div>
   </div>
   <div class="mb-3 row">
@@ -66,12 +72,9 @@
           || userCarsControl.controls['middleName'].touched))}"
         required
       >
-      <!-- <div class="invalid-tooltip" *ngIf="userCarsControl.controls['middleName'].invalid
-        && (userCarsControl.controls['middleName'].dirty
-          || userCarsControl.controls['middleName'].touched)"
-      >
+      <div class="invalid-tooltip" *ngIf="userCarsControl.controls['middleName'].invalid">
         * Введите отчество !!
-      </div> -->
+      </div>
     </div>
   </div>
 
@@ -149,6 +152,9 @@
             [readonly]="isReadOnly"
             required
           >
+          <div class="invalid-tooltip" *ngIf="carsControl.controls[i].get('brand')?.invalid">
+            * Введите марку !!
+          </div>
         </div>
         <div class="col-sm-2 mb-2">
           <label [for]="'model' + i" class="visually-hidden"></label>
@@ -164,6 +170,9 @@
             [readonly]="isReadOnly"
             required
           >
+          <div class="invalid-tooltip" *ngIf="carsControl.controls[i].get('model')?.invalid">
+            * Введите модель !!
+          </div>
         </div>
         <div class="col-sm-2 mb-2">
           <label [for]="'year' + i" class="visually-hidden"></label>

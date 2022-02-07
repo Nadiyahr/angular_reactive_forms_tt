@@ -28,7 +28,7 @@ export class AppComponent implements OnInit {
     this.getData();
   }
 
-  addUser() {
+  addNewUser() {
     this.selectedUser = {
       id: this._userService.generateId(this.users),
       lastName: '',
@@ -36,7 +36,7 @@ export class AppComponent implements OnInit {
       middleName: '',
       cars: []
     }
-
+    this.numbersArray = this.users.map(user => user.cars.map(car => car.number)).flat();
     this.cars = [];
     this.toggle()
   }

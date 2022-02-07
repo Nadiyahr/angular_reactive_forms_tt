@@ -10,8 +10,8 @@ export class InMemoryDataService implements InMemoryDbService {
     let users = [
       {
         id: 11,
-        firstName: 'Петрова',
-        lastName: 'Наталья',
+        firstName: 'Наталья',
+        lastName: 'Петрова',
         middleName: 'Игориевна',
         cars: [
           { userId: 11, number: 'XP1234PH', brand: 'KIA', model: 'Optima', year: 2019},
@@ -20,8 +20,8 @@ export class InMemoryDataService implements InMemoryDbService {
       },
       {
         id: 12,
-        firstName: 'Козлова',
-        lastName: 'Ольга',
+        firstName: 'Ольга',
+        lastName: 'Васильева',
         middleName: 'Петровна',
         cars: [
           { userId: 12, number: 'XP1234PH', brand: 'KIA', model: 'Optima', year: 2019},

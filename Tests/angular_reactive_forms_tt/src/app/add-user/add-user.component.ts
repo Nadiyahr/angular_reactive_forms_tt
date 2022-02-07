@@ -42,15 +42,15 @@ export class AddUserComponent implements OnInit {
       id: new FormControl(this.user?.id),
       lastName: new FormControl(this.user?.lastName, [
         Validators.required,
-        Validators.pattern("^[А-Я][а-я]{1,20}$")
+        Validators.pattern("^[А-Я][А-Яа-я- ]{1,20}$")
       ]),
       firstName: new FormControl(this.user?.firstName, [
         Validators.required,
-        Validators.pattern("^[А-Я][а-я]+$")
+        Validators.pattern("^[А-Я][А-Яа-я- ]+$")
       ]),
       middleName: new FormControl(this.user?.middleName ,[
         Validators.required,
-        Validators.pattern("^[А-Я][а-я]+$")
+        Validators.pattern("^[А-Я][А-Яа-я- ]+$")
       ]),
       carsControl: this.formBuilder.array([])
     })
@@ -72,21 +72,10 @@ export class AddUserComponent implements OnInit {
       formArray.push(
         this.formBuilder.group({
           userId: new FormControl(car.userId),
-          number: new FormControl(car.number,
-          //  [ Validators.required,
-          //   Validators.pattern("^[A-Z]{2}[0-9]{4}[A-Z]{2}$"),
-          //   this.carNumberValidator()]
-          ),
-          brand: new FormControl(car.brand, 
-            // [Validators.required, Validators.pattern("^[A-Z].*$")]
-            ),
-          model: new FormControl(car.model, 
-            // [Validators.required, Validators.pattern("^[A-Z].*$")]
-            ),
-          year: new FormControl(car.year, 
-            // [Validators.required,
-            // this.minMaxYearForbiden(1990, new Date().getFullYear())]
-          ),
+          number: new FormControl(car.number),
+          brand: new FormControl(car.brand),
+          model: new FormControl(car.model),
+          year: new FormControl(car.year),
         })
       )
     })
@@ -102,8 +91,8 @@ export class AddUserComponent implements OnInit {
         Validators.pattern("^[A-Z]{2}[0-9]{4}[A-Z]{2}$"),
         this.carNumberValidator()
       ]],
-      brand: ['', [Validators.required, Validators.pattern("^[A-Z][a-z]{2,20}$")]],
-      model: ['', [Validators.required, Validators.pattern("^[A-Z][a-z]{2,20}$")]],
+      brand: ['', [Validators.required, Validators.pattern("^[A-Z][A-Za-z- ]{2,20}$")]],
+      model: ['', [Validators.required, Validators.pattern("^[A-Z][A-Za-z- ]{2,20}$")]],
       year: ['', [
         Validators.required,
         this.minMaxYearForbiden(1990, new Date().getFullYear())
@@ -178,10 +167,8 @@ export class AddUserComponent implements OnInit {
   }
 
     onSubmit() {
-    if(this.userCarsControl.valid){
+    if (this.userCarsControl.valid) {
      this.save();
-    } else {
-      console.log(this.userCarsControl)
     }
   }
 }
