@@ -26,7 +26,7 @@
         Удалить
       </button>
     </div>
-    
+
     <table class="table table-hover table-bordered">
       <thead>
         <tr>
@@ -52,6 +52,9 @@
         </tr>
       </tbody>
     </table>
+    <div *ngIf="users.length === 0">
+      <h2>Список пуст. Нажмите кнопку +добавить.</h2>
+    </div>
   </div>
   <ng-template #elseForm>
     <app-add-user
@@ -60,6 +63,7 @@
       [isUpdated]="isUpdated"
       [isReadOnly]="isReadOnly"
       [arrayOfNumbers]="numbersArray"
+      [isCreateNew]="createNew"
       (toggle)="toggle()"
       (isListUpdate)="isListUpdate()"
       (readOnlyViev)="readOnlyViev()"

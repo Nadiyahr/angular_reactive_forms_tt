@@ -222,6 +222,7 @@
         type="submit"
         class="my-3 me-3 btn btn-primary"
         [disabled]="!userCarsControl.valid || isReadOnly || userCarsControl.untouched"
+        (click)="onSubmit()"
       >
         Сохранить
       </button>

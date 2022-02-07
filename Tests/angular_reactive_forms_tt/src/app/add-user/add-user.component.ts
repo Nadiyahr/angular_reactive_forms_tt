@@ -27,6 +27,7 @@ export class AddUserComponent implements OnInit {
   @Input() isUpdated: boolean;
   @Input() isReadOnly: boolean;
   @Input() arrayOfNumbers: string[];
+  @Input() isCreateNew: boolean;
   @Output() toggle = new EventEmitter();
   @Output() isListUpdate = new EventEmitter();
   @Output() readOnlyViev = new EventEmitter();
@@ -155,15 +156,29 @@ export class AddUserComponent implements OnInit {
   }
 
   save(): void {
-      this.user.firstName = this.newValue.firstName;
-      this.user.lastName = this.newValue.lastName;
-      this.user.middleName = this.newValue.middleName;
-      this.user!.cars = this.newValue.carsControl
+    this.user.firstName = this.newValue.firstName;
+    this.user.lastName = this.newValue.lastName;
+    this.user.middleName = this.newValue.middleName;
+    this.user!.cars = this.newValue.carsControl
+
+    if (this.isCreateNew) {
+      this._userService.createOwner(
+        this.user.firstName,
+        this.user.lastName,
+        this.user.middleName,
+        this.user.cars
+      ).subscribe(() => {
+        this.goBack();
+        this.isListUpdate.emit();
+        this.isCreateNew = false;
+      })
+    } else {
       this._userService.updateOwner(this.user, this.user.id)
       .subscribe(() => {
-        this.goBack()
-        this.isListUpdate.emit()
+        this.goBack();
+        this.isListUpdate.emit();
       })
+    }
   }
 
     onSubmit() {

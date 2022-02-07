@@ -19,6 +19,7 @@ export class AppComponent implements OnInit {
   isIndex: boolean = false;
   aId: number;
   numbersArray: string[];
+  createNew: boolean = false;
 
   constructor(
     private _userService: UserService,
@@ -38,6 +39,7 @@ export class AppComponent implements OnInit {
     }
     this.numbersArray = this.users.map(user => user.cars.map(car => car.number)).flat();
     this.cars = [];
+    this.createNew = true;
     this.toggle()
   }
 
@@ -78,7 +80,7 @@ export class AppComponent implements OnInit {
     this._userService.deleteOwner(id)
       .subscribe();
     this.getData();
-
+    this.isIndex = !this.isIndex;
   }
 
   isListUpdate(): void {
@@ -96,9 +98,5 @@ export class AppComponent implements OnInit {
       this.users = data;
     });
   }
-
-  // getNumbersForValidation(): void {
-  //   this.numbersArray = 
-  // }
 
 }
