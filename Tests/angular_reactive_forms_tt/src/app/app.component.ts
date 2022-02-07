@@ -37,13 +37,7 @@ export class AppComponent implements OnInit {
       cars: []
     }
 
-    this.cars = [{
-      userId: this._userService.generateId(this.users),
-      number: '',
-      brand: '',
-      model: '',
-      year: null,
-    }]
+    this.cars = [];
     this.toggle()
   }
 
