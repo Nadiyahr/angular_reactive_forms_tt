@@ -52,6 +52,7 @@ export class AppComponent implements OnInit {
     this.isSelected = !this.isSelected;
     if (!this.isSelected) {
       this.selectedIndex = null;
+      this.isIndex = !this.isIndex;
     }
   }
 
